@@ -98,7 +98,7 @@ else
   disp('Start Anew!')
 end
 % DO NOT MODIFY THE IF STATEMENTS
-tspan = [0:1:30]*60; % sec
+tspan = [0:0.25:90]*60; % sec
 Nt = length(tspan);
 % Update tspan for continuing runs
 if conti==1
