@@ -12,12 +12,12 @@
 %   released with the submission of Kuo & Neelin (2023) to JAS. 
 %
 %   Utility subroutines used by this driver script can be found under
-%    ACE_MATLAB/util_weno/
-%    ACE_MATLAB/util_thermodynamics/
+%    ACE_MATLAB_v1.0/util_weno/
+%    ACE_MATLAB_v1.0/util_thermodynamics/
 %   ARMBE soundings under
-%    ACE_MATLAB/data/soundings/  <-----NOT PART OF THE ACE_MATLAB PACKAGE!
+%    ACE_MATLAB_v1.0/data/soundings/  <-----NOT PART OF THE ACE_MATLAB PACKAGE!
 %   Pre-computed nonlocal bases under
-%    ACE_MATLAB/data/basis/
+%    ACE_MATLAB_v1.0/data/basis/
 %
 %   Reference: 
 %    Kuo, Y.-H., and J. D. Neelin, 2022: Conditions for convective deep inflow. 
@@ -54,8 +54,7 @@ global theta_e_mf qt_mf Tv_mf p_mf rho_mf rho_mfh MB Z zm z p g k dz Nzm
 global eps_tur eps_sl eddiffu eddiwin qc_ramp dqc tau_pr EBF EBT
 
 %% Set up parameters
-plotting = 1;
-cmp = 'jet';  % Recommend turbo or spectral for newer MATLAB versions
+plotting = 1; %default colormap=turbo (for R202x or later)
 
 % ARM sounding option
 arm = 3; %1=Manus/2=Nauru/3=GOAmazon
@@ -217,88 +216,88 @@ save([ace_output_dir ace_output_fn])
 
 %% Plotting & Saving
 if plotting
+
+  % Equivalent potential temperature
   figure('Units','normalized','Position',[0 0 1 1])
-  cmp = colormap(turbo(Nt));
+  contourf(tspan/60,zm/1e3,theta_e,[330:0.5:360],'linestyle','none')
+  hold all
+  colormap(turbo)
+  contour(tspan/60,zm/1e3,qc*1e3,[0.01 0.01],'color','w','linewidth',2)
+  ylim([0,14])
+  grid on
+  clb = colorbar;
+  clb.Ticks = [335:3:350];
+  clim([335 350])
+  set(gca,'fontsize',30)
+  xlabel('Time (min)')
+  ylabel('Height (km)')
+  yticks(0:1:20)
+  yticklabels({'0';'';'2';'';'4';'';'6';'';'8';'';'10';'';'12';'';'14'})
+  ax = gca;
+  ax.GridAlpha = 0.5;
+  title(['ACE {\it \theta_e (K)} - ' armname{arm} ' ' datestr(day) ' (UTC)'])
 
-  subplot(1,6,1)
-  set(gca,'fontsize',15)
-  title([datestr(date(pidx))])
+  % Specific mass of condensate
+  figure('Units','normalized','Position',[0 0 1 1])
+  contourf(tspan/60,zm/1e3,qc*1e3,[0.01,0.05:0.05:25],'linestyle','none')
   hold all
-  plot(theta_zm(:,pidx),zm/1e3,'color','k','linewidth',5)
-  for idt=1:Nt
-    plot(theta(:,idt),zm/1e3,'color',cmp(idt,:),'linewidth',1)
-  end
-  xlabel('\theta (K)')
-  xlim([295 365])
-  ylim([0 20])
-  grid on
-  box on
-  subplot(1,6,2)
-  set(gca,'fontsize',15)
-  title(['pr = ' num2str(pr(pidx),'%.2f') 'mm/h'])
+  colormap(turbo)
   hold all
-  plot(rh_zm(:,pidx)*100,zm/1e3,'color','k','linewidth',5)
-  for idt=1:Nt
-    plot(RH(:,idt)*100,zm/1e3,'color',cmp(idt,:),'linewidth',1)
-  end
-  xlabel('RH (%)')
-  xlim([0 100])
-  ylim([0 20])
+  ylim([0,14])
   grid on
-  box on
-  subplot(1,6,3)
-  set(gca,'fontsize',15)
-  title(['pidx = ' num2str(pidx)])
-  hold all
-  plot(theta_e_mf,zm/1e3,'color','k','linewidth',5)
-  plot(theta_es_zm(:,pidx),zm/1e3,'color','m','linewidth',2)
-  for idt=1:Nt
-    plot(X(1:Nzm,idt),zm/1e3,'color',cmp(idt,:),'linewidth',1)
-  end
-  xlabel('\theta_{e} (K)')
-  xlim([325 365])
-  ylim([0 20])
-  grid on
-  box on
-  subplot(1,6,4)
-  set(gca,'fontsize',15)
-  title(['tspan=[' num2str(tspan(1)/60) ':' num2str(tspan(2)/60) ':' num2str(tspan(end)/60) '](min)'])
-  hold all
-  plot(qt_mf*1e3,zm/1e3,'color','k','linewidth',5,'displayname',['Env.'])
-  plot(qsat(:,1)*1e3,zm/1e3,'color','m','linewidth',2,'displayname',['Sat.'])
-  for idt=1:Nt
-    plot(X(Nzm+(1:Nzm),idt)*1e3,zm/1e3,'color',cmp(idt,:),'linewidth',1,...
-         'displayname',[num2str(tspan(idt)/60) 'min'])
-  end
-  xlabel('q_t (g/kg)')
-  ylim([0 20])
-  grid on
-  box on
-  legend('location','northeast','fontsize',10)
-  subplot(1,6,5)
-  set(gca,'fontsize',15)
-  title(['q_{c,ramp}=' num2str(qc_ramp*1e3) 'g/kg'])
-  hold all
-  for idt=1:Nt
-    plot(B(:,idt),zm/1e3,'color',cmp(idt,:))
-  end
-  xlabel('B (m/s^2)')
-  ylim([0 20])
-  grid on
-  box on
-  subplot(1,6,6);
-  set(gca,'fontsize',15)
-  title(['D=' num2str(D) 'km'])
-  hold all
-  for idt=1:Nt
-    plot(X(2*Nzm+(1:Nzm),idt),zm/1e3,'color',cmp(idt,:))
-  end
-  xlabel('Mass flux (kg m^{-2}s^{-1})')
-  ylim([0 20])
-  grid on
-  box on
-  drawnow
+  clb = colorbar;
+  clb.Ticks = [0.01,1:1:5];
+  clim([0.01 5])
+  set(gca,'fontsize',25)
+  xlabel('Time (min)')
+  ylabel('Height (km)')
+  yticks(0:1:20)
+  yticklabels({'0';'';'2';'';'4';'';'6';'';'8';'';'10';'';'12';'';'14'})
+  ax = gca;
+  ax.GridAlpha = 0.5;
+  title(['ACE {\it q_c (g/kg)} - ' armname{arm} ' ' datestr(day) ' (UTC)'])
 
+  % Mass flux
+  figure('Units','normalized','Position',[0 0 1 1])
+  contourf(tspan/60,zm/1e3,mf,[-4:0.1:12],'linestyle','none')
+  hold all
+  colormap(turbo)
+  contour(tspan/60,zm/1e3,qc*1e3,[0.01 0.01],'color','w','linewidth',2)
+  ylim([0,14])
+  grid on
+  clb = colorbar;
+  clb.Ticks = [-3:1:8];
+  clim([-3 8])
+  set(gca,'fontsize',20)
+  xlabel('Time (min)')
+  ylabel('Height (km)')
+  yticks(0:1:20)
+  yticklabels({'0';'';'2';'';'4';'';'6';'';'8';'';'10';'';'12';'';'14'})
+  ax = gca;
+  ax.GridAlpha = 0.5;
+  title(['ACE {\it \rho_0w (kg/m^2/s)} - ' armname{arm} ' ' datestr(day) ' (UTC)'])
+
+  % d(Mass flux)/dz = dynamic entrainment/detrainment
+  figure('Units','normalized','Position',[0 0 1 1])
+  contourf(tspan/60,zm/1e3,dMFdz,[-5:0.1:5]*1e-3,'linestyle','none')
+  colormap(turbo)
+  hold all
+  contour(tspan/60,zm/1e3,qc*1e3,[0.01 0.01],'color','w','linewidth',2)
+  ylim([0,14])
+  grid on
+  clb = colorbar;
+  clb.Ticks = [-3.5:0.5:2.5]*1e-3;
+  clim([-3.5 2.5]*1e-3)
+  set(gca,'fontsize',20)
+  xlabel('Time (min)')
+  ylabel('Height (km)')
+  yticks(0:1:20)
+  yticklabels({'0';'';'2';'';'4';'';'6';'';'8';'';'10';'';'12';'';'14'})
+  ax = gca;
+  ax.GridAlpha = 0.5;
+  title(['ACE {\it \partial_z(\rho_0w) (kg/m^3/s)} - ' armname{arm} ' ' datestr(day) ' (UTC)'])
+
+  % Precipitation
   figure
   colormap(jet)
   subplot(1,3,1)
