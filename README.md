@@ -24,4 +24,4 @@ Changing other variables is not recommended unless you are certain what you are 
 
 ## References:
 Kuo, Y.-H., and J. D. Neelin, 2022: Conditions for convective deep inflow. Geophys. Res. Lett., 49, e2022GL100 552, doi:10.1029/2022GL100552.
-Kuo, Y.-H., and J. D. Neelin, 2023: Anelastic Convective Entities: formulation and properties. J. Atmos. Sci., submitted. Preprint available: [KN23-ACE-preprint.pdf](https://drive.google.com/file/d/1e0_n11Eop3eqQGu_-Vtl7PI2V7KjTI33/view?usp=sharing)
+Kuo, Y.-H., and J. D. Neelin, 2023: Anelastic Convective Entities: formulation and properties. J. Atmos. Sci., submitted. Preprint available: [KN23-ACE-preprint.pdf](https://drive.google.com/file/d/1vdOy_NckxwoU3WVhTsHkunjNt_fQqR7b/view?usp=drive_link)
