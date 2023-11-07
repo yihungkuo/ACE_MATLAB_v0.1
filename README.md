@@ -5,16 +5,20 @@ This ACE_MATLAB_v0.1 code package is prepared for and released with the submissi
 
 The pre-computed nonlocal bases under `ACE_MATLAB_v0.1/data/basis/` are provided as is.
 
-Running the ACE model requires ARM site sounding data (ARMBEATM) available at http://dx.doi.org/10.5439/1333748. A copy of a few samples---not part of this code package, provided only for user’s convenience---can be found here: [soundings.zip](https://drive.google.com/file/d/1XQ6rVE7Izc_5xipvHFaswgSCNdquk61T/view?usp=drive_link)
+Running the ACE model requires ARM site sounding data (ARMBEATM) available at http://dx.doi.org/10.5439/1333748. 
+
+A copy of a few samples---not part of this code package, provided only for user’s convenience---can be found here: [soundings.zip](https://drive.google.com/file/d/1XQ6rVE7Izc_5xipvHFaswgSCNdquk61T/view?usp=drive_link)
 
 
 ## To run the package
-(1) place sounding data under `ACE_MATLAB_v0.1/data/soundings/` and 
+(1) place sounding data under `ACE_MATLAB_v0.1/data/soundings/` and
+
 (2) execute the driver script `ace_v01.m` in MATLAB.
 
 
 ## Experimenting with the ACE model
 In the `Set up parameters` section of `ace_v01.m` there are a few parameters users can vary, including: `arm`, `pidx`, `qc_ramp`, `conti`, `tspan`, as well as variables for `Initial mass flux`, `Initial thermal bubble`, and `External buoyancy forcing` \[most variables are documented with in-line comments in the driver script; initiation and forcing options documented in Kuo & Neelin (2023)].
+
 Changing other variables is not recommended unless you are certain what you are doing.
 
 
