@@ -24,7 +24,7 @@
 %      Geophys. Res. Lett., 49, e2022GL100 552, doi:10.1029/2022GL100552.
 %    Kuo, Y.-H., and J. D. Neelin, 2023: Anelastic Convective Entities:
 %      formulation and properties. J. Atmos. Sci., submitted. Preprint
-%      available at https://drive.google.com/file/d/1e0_n11Eop3eqQGu_-Vtl7PI2V7KjTI33/view?usp=sharing.
+%      available at https://doi.org/10.22541/au.169945446.60914451/v1.
 % =========================================================================
 
 %% Directory/file paths
