@@ -11,9 +11,9 @@ A copy of a few samplesâ€”not part of this code package, provided only for userâ
 
 
 ## To run the package
-(1) place sounding data under `ACE_MATLAB_v0.1/data/soundings/` and
+(1) Place sounding data under `ACE_MATLAB_v0.1/data/soundings/` and
 
-(2) execute the driver script `ace_v01.m` in MATLAB.
+(2) Execute the driver script `ace_v01.m` in MATLAB.
 
 
 ## Experimenting with the ACE model
